@@ -102,19 +102,19 @@
         const scbDividend = parseFloat($("#scbDividend").val());
         const scbTax = parseFloat($("#scbTax").val()) / 100;
 
-        const scbInvestment = numberWithCommas(shareCount * scbPrice);
-        const scbMonthly = numberWithCommas(shareCount * scbDividend * (1 - scbTax));
+        const scbInvestment =  shareCount * scbPrice ;
+        const scbMonthly =  shareCount * scbDividend * (1 - scbTax));
         
-        $("#scbInvestment").text(scbInvestment.toFixed(2));
-        $("#scbMonthly").text(scbMonthly.toFixed(2));
+        $("#scbInvestment").text(numberWithCommas(scbInvestment.toFixed(2)));
+        $("#scbMonthly").text(numberWithCommas(scbMonthly.toFixed(2)));
 
         // O Calculations
         const oPrice = parseFloat($("#oPrice").val());
         const oDividend = parseFloat($("#oDividend").val());
         const oTax = parseFloat($("#oTax").val()) / 100;
 
-        const oInvestment = numberWithCommas(shareCount * oPrice * exchangeRate);
-        const oMonthly = numberWithCommas(shareCount * oDividend * (1 - oTax) * exchangeRate);
+        const oInvestment =  shareCount * oPrice * exchangeRate ;
+        const oMonthly =  shareCount * oDividend * (1 - oTax) * exchangeRate ;
         
         $("#oInvestment").text(oInvestment.toFixed(2));
         $("#oMonthly").text(oMonthly.toFixed(2));
@@ -124,11 +124,11 @@
         const jepqDividend = parseFloat($("#jepqDividend").val());
         const jepqTax = parseFloat($("#jepqTax").val()) / 100;
 
-        const jepqInvestment = numberWithCommas(shareCount * jepqPrice * exchangeRate);
-        const jepqMonthly = numberWithCommas(shareCount * jepqDividend * (1 - jepqTax) * exchangeRate);
+        const jepqInvestment =  shareCount * jepqPrice * exchangeRate ;
+        const jepqMonthly =  shareCount * jepqDividend * (1 - jepqTax) * exchangeRate ;
         
-        $("#jepqInvestment").text(jepqInvestment.toFixed(2));
-        $("#jepqMonthly").text(jepqMonthly.toFixed(2));
+        $("#jepqInvestment").text(numberWithCommas(jepqInvestment.toFixed(2)));
+        $("#jepqMonthly").text(numberWithCommasjepqMonthly.toFixed(2)));
 
         updateChart([scbMonthly, oMonthly, jepqMonthly]);
     }
