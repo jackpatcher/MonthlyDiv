@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividend Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container my-5">
+    <h2 class="text-center">Dividend Calculator</h2>
+    <div class="row">
+        <!-- Investment Input -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="investment">Investment (in THB)</label>
+                <input type="number" id="investment" class="form-control" value="1000000" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="exchangeRate">Exchange Rate (THB/USD)</label>
+                <input type="number" id="exchangeRate" class="form-control" value="33.97" step="0.01">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- SCB Section -->
+        <div class="col-md-4">
+            <h4>SCB</h4>
+            <div class="form-group">
+                <label>Current Price (THB)</label>
+                <input type="number" id="scbPrice" class="form-control" value="112.5" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Monthly Dividend per Share (THB)</label>
+                <input type="number" id="scbDividend" class="form-control" value="0.667" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Tax (%)</label>
+                <input type="number" id="scbTax" class="form-control" value="10" step="0.1">
+            </div>
+            <h5>Monthly Dividend: <span id="scbMonthly">0</span> THB</h5>
+        </div>
+
+        <!-- O Section -->
+        <div class="col-md-4">
+            <h4>O</h4>
+            <div class="form-group">
+                <label>Current Price (USD)</label>
+                <input type="number" id="oPrice" class="form-control" value="58.88" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Monthly Dividend per Share (USD)</label>
+                <input type="number" id="oDividend" class="form-control" value="0.264" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Tax (%)</label>
+                <input type="number" id="oTax" class="form-control" value="15" step="0.1">
+            </div>
+            <h5>Monthly Dividend: <span id="oMonthly">0</span> THB</h5>
+        </div>
+
+        <!-- JEPQ Section -->
+        <div class="col-md-4">
+            <h4>JEPQ</h4>
+            <div class="form-group">
+                <label>Current Price (USD)</label>
+                <input type="number" id="jepqPrice" class="form-control" value="54.44" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Monthly Dividend per Share (USD)</label>
+                <input type="number" id="jepqDividend" class="form-control" value="0.380" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Tax (%)</label>
+                <input type="number" id="jepqTax" class="form-control" value="15" step="0.1">
+            </div>
+            <h5>Monthly Dividend: <span id="jepqMonthly">0</span> THB</h5>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="my-5">
+        <canvas id="dividendChart"></canvas>
+    </div>
+</div>
+
+<script  >
+    $(document).ready(function() {
+        function calculateDividends() {
+            const investment = parseFloat($("#investment").val());
+            const exchangeRate = parseFloat($("#exchangeRate").val());
+
+            // SCB Calculations
+            const scbPrice = parseFloat($("#scbPrice").val());
+            const scbDividend = parseFloat($("#scbDividend").val());
+            const scbTax = parseFloat($("#scbTax").val()) / 100;
+            const scbShares = investment / scbPrice;
+            const scbMonthly = scbShares * scbDividend * (1 - scbTax);
+            $("#scbMonthly").text(scbMonthly.toFixed(2));
+
+            // O Calculations
+            const oPrice = parseFloat($("#oPrice").val());
+            const oDividend = parseFloat($("#oDividend").val());
+            const oTax = parseFloat($("#oTax").val()) / 100;
+            const oShares = (investment / exchangeRate) / oPrice;
+            const oMonthly = oShares * oDividend * (1 - oTax) * exchangeRate;
+            $("#oMonthly").text(oMonthly.toFixed(2));
+
+            // JEPQ Calculations
+            const jepqPrice = parseFloat($("#jepqPrice").val());
+            const jepqDividend = parseFloat($("#jepqDividend").val());
+            const jepqTax = parseFloat($("#jepqTax").val()) / 100;
+            const jepqShares = (investment / exchangeRate) / jepqPrice;
+            const jepqMonthly = jepqShares * jepqDividend * (1 - jepqTax) * exchangeRate;
+            $("#jepqMonthly").text(jepqMonthly.toFixed(2));
+
+            updateChart([scbMonthly, oMonthly, jepqMonthly]);
+        }
+
+        function updateChart(data) {
+            const ctx = document.getElementById('dividendChart').getContext('2d');
+            if (window.myChart) {
+                window.myChart.data.datasets[0].data = data;
+                window.myChart.update();
+            } else {
+                window.myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['SCB', 'O', 'JEPQ'],
+                        datasets: [{
+                            label: 'Monthly Dividend (THB)',
+                            data: data,
+                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc']
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        }
+
+        // Trigger calculation on input change
+        $("input").on("input", calculateDividends);
+        calculateDividends(); // Initial calculation
+    });
+
+    
+</script>
+</body>
+</html>
