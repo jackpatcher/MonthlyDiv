@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dividend Calculator</title>
+    <title>โปรแกรมคำนวณเงินปันผล</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="container my-5">
-    <h2 class="text-center">Dividend Calculator</h2>
+    <h2 class="text-center">โปรแกรมคำนวณเงินปันผล</h2>
     <div class="row">
         <!-- Investment Input -->
         <div class="col-md-6">
             <div class="form-group">
-                <label for="investment">Investment (in THB)</label>
+                <label for="investment">ลงทุน ( บาท)</label>
                 <input type="number" id="investment" class="form-control" value="1000000" step="0.01">
             </div>
             <div class="form-group">
-                <label for="exchangeRate">Exchange Rate (THB/USD)</label>
+                <label for="exchangeRate">อัตราแลกเปลี่ยน (THB/USD)</label>
                 <input type="number" id="exchangeRate" class="form-control" value="33.97" step="0.01">
             </div>
         </div>
@@ -30,54 +30,54 @@
         <div class="col-md-4">
             <h4>SCB</h4>
             <div class="form-group">
-                <label>Current Price (THB)</label>
+                <label>ราคาปัจจุบัน (THB)</label>
                 <input type="number" id="scbPrice" class="form-control" value="112.5" step="0.01">
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (THB)</label>
+                <label>ปันผลต่อหุ้น ต่อเดือน (บาท)</label>
                 <input type="number" id="scbDividend" class="form-control" value="0.667" step="0.01">
             </div>
             <div class="form-group">
-                <label>Tax (%)</label>
+                <label>ภาษีปัน (%)</label>
                 <input type="number" id="scbTax" class="form-control" value="10" step="0.1">
             </div>
-            <h5>Monthly Dividend: <span id="scbMonthly">0</span> THB</h5>
+            <h5>ได้ปันผลต่อเดือน : <span id="scbMonthly">0</span> THB</h5>
         </div>
 
         <!-- O Section -->
         <div class="col-md-4">
             <h4>O</h4>
             <div class="form-group">
-                <label>Current Price (USD)</label>
+                <label>ราคาปัจจุบัน (ดอลล่า)</label>
                 <input type="number" id="oPrice" class="form-control" value="58.88" step="0.01">
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (USD)</label>
+                <label>ปันผลต่อเดือน ต่อหุ้น (ดอลล่า)</label>
                 <input type="number" id="oDividend" class="form-control" value="0.264" step="0.01">
             </div>
             <div class="form-group">
-                <label>Tax (%)</label>
+                <label>ภาษีปันผล (%)</label>
                 <input type="number" id="oTax" class="form-control" value="15" step="0.1">
             </div>
-            <h5>Monthly Dividend: <span id="oMonthly">0</span> THB</h5>
+            <h5>ได้ปันผลต่อเดือน : <span id="oMonthly">0</span> บาท</h5>
         </div>
 
         <!-- JEPQ Section -->
         <div class="col-md-4">
             <h4>JEPQ</h4>
             <div class="form-group">
-                <label>Current Price (USD)</label>
+                <label>ราคาปัจจุบัน (ดอลล่า)</label>
                 <input type="number" id="jepqPrice" class="form-control" value="54.44" step="0.01">
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (USD)</label>
+                <label>ปันผลต่อเดือน ต่อหุ้น (ดอลล่า)</label>
                 <input type="number" id="jepqDividend" class="form-control" value="0.380" step="0.01">
             </div>
             <div class="form-group">
-                <label>Tax (%)</label>
+                <label>ภาษีปันผล (%)</label>
                 <input type="number" id="jepqTax" class="form-control" value="15" step="0.1">
             </div>
-            <h5>Monthly Dividend: <span id="jepqMonthly">0</span> THB</h5>
+            <h5>ได้ปันผลต่อเดือน: <span id="jepqMonthly">0</span> บาท</h5>
         </div>
     </div>
 
