@@ -3,153 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dividend Calculator</title>
+    <title>โปรแกรมคำนวณปันผลต่อเดือน</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="container my-5">
-    <h2 class="text-center">Dividend Calculator</h2>
-    
-    <!-- Investment and Exchange Rate Section -->
-    <div class="row">
+    <h2 class="text-center">โปรแกรมคำนวณปันผลต่อเดือน</h2>
+
+    <!-- จำนวนหุ้นและอัตราแลกเปลี่ยน -->
+    <div class="form-group row">
         <div class="col-md-6">
-            <div class="form-group">
-                <label for="investment">Total Investment (THB)</label>
-                <input type="number" id="investment" class="form-control" value="1000000">
-            </div>
+            <label for="shareCount">จำนวนหุ้น (ใช้ในการคำนวณทั้งหมด)</label>
+            <input type="number" id="shareCount" class="form-control" value="1000">
         </div>
         <div class="col-md-6">
-            <div class="form-group">
-                <label for="exchangeRate">Exchange Rate (THB/USD)</label>
-                <input type="number" id="exchangeRate" class="form-control" value="33.97" step="0.01">
-            </div>
+            <label for="exchangeRate">อัตราแลกเปลี่ยน (บาท/ดอลลาร์)</label>
+            <input type="number" id="exchangeRate" class="form-control" value="33.97" step="0.01">
         </div>
     </div>
 
-    <!-- Stock Sections -->
+    <!-- ส่วนหุ้นต่าง ๆ -->
     <div class="row">
-        <!-- SCB Section -->
+        <!-- SCB -->
         <div class="col-md-4">
             <h4>SCB</h4>
             <div class="form-group">
-                <label>Current Price (THB)</label>
-                <input type="number" id="scbPrice" class="form-control" value="112.5">
+                <label>ราคาปัจจุบัน (บาท)</label>
+                <input type="number" id="scbPrice" class="form-control" value="112.5" readonly>
             </div>
             <div class="form-group">
-                <label>Shares Required</label>
-                <input type="number" id="scbShares" class="form-control" placeholder="Calculated based on investment">
+                <label>ปันผลต่อเดือนต่อหุ้น (บาท)</label>
+                <input type="number" id="scbDividend" class="form-control" value="0.667" readonly>
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (THB)</label>
-                <input type="number" id="scbDividend" class="form-control" value="0.667">
+                <label>ภาษี (%)</label>
+                <input type="number" id="scbTax" class="form-control" value="10" readonly>
             </div>
-            <div class="form-group">
-                <label>Tax (%)</label>
-                <input type="number" id="scbTax" class="form-control" value="10">
-            </div>
-            <h5>Monthly Dividend: <span id="scbMonthly">0</span> THB</h5>
+            <h5>ต้องใช้เงินลงทุน: <span id="scbInvestment">0</span> บาท</h5>
+            <h5>รายได้ต่อเดือน: <span id="scbMonthly">0</span> บาท</h5>
         </div>
 
-        <!-- O Section -->
+        <!-- O -->
         <div class="col-md-4">
             <h4>O</h4>
             <div class="form-group">
-                <label>Current Price (USD)</label>
-                <input type="number" id="oPrice" class="form-control" value="58.88">
+                <label>ราคาปัจจุบัน (ดอลลาร์)</label>
+                <input type="number" id="oPrice" class="form-control" value="58.88" readonly>
             </div>
             <div class="form-group">
-                <label>Shares Required</label>
-                <input type="number" id="oShares" class="form-control" placeholder="Calculated based on investment">
+                <label>ปันผลต่อเดือนต่อหุ้น (ดอลลาร์)</label>
+                <input type="number" id="oDividend" class="form-control" value="0.264" readonly>
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (USD)</label>
-                <input type="number" id="oDividend" class="form-control" value="0.264">
+                <label>ภาษี (%)</label>
+                <input type="number" id="oTax" class="form-control" value="15" readonly>
             </div>
-            <div class="form-group">
-                <label>Tax (%)</label>
-                <input type="number" id="oTax" class="form-control" value="15">
-            </div>
-            <h5>Monthly Dividend: <span id="oMonthly">0</span> THB</h5>
+            <h5>ต้องใช้เงินลงทุน: <span id="oInvestment">0</span> บาท</h5>
+            <h5>รายได้ต่อเดือน: <span id="oMonthly">0</span> บาท</h5>
         </div>
 
-        <!-- JEPQ Section -->
+        <!-- JEPQ -->
         <div class="col-md-4">
             <h4>JEPQ</h4>
             <div class="form-group">
-                <label>Current Price (USD)</label>
-                <input type="number" id="jepqPrice" class="form-control" value="54.44">
+                <label>ราคาปัจจุบัน (ดอลลาร์)</label>
+                <input type="number" id="jepqPrice" class="form-control" value="54.44" readonly>
             </div>
             <div class="form-group">
-                <label>Shares Required</label>
-                <input type="number" id="jepqShares" class="form-control" placeholder="Calculated based on investment">
+                <label>ปันผลต่อเดือนต่อหุ้น (ดอลลาร์)</label>
+                <input type="number" id="jepqDividend" class="form-control" value="0.380" readonly>
             </div>
             <div class="form-group">
-                <label>Monthly Dividend per Share (USD)</label>
-                <input type="number" id="jepqDividend" class="form-control" value="0.380">
+                <label>ภาษี (%)</label>
+                <input type="number" id="jepqTax" class="form-control" value="15" readonly>
             </div>
-            <div class="form-group">
-                <label>Tax (%)</label>
-                <input type="number" id="jepqTax" class="form-control" value="15">
-            </div>
-            <h5>Monthly Dividend: <span id="jepqMonthly">0</span> THB</h5>
+            <h5>ต้องใช้เงินลงทุน: <span id="jepqInvestment">0</span> บาท</h5>
+            <h5>รายได้ต่อเดือน: <span id="jepqMonthly">0</span> บาท</h5>
         </div>
     </div>
 
-    <!-- Dividend Summary Chart -->
+    <!-- กราฟสรุปปันผล -->
     <div class="my-5">
         <canvas id="dividendChart"></canvas>
     </div>
 </div>
 
-<script  > 
+<script  >
 
     $(document).ready(function() {
     function calculateDividends() {
-        const investment = parseFloat($("#investment").val());
         const exchangeRate = parseFloat($("#exchangeRate").val());
+        const shareCount = parseFloat($("#shareCount").val());
 
         // SCB Calculations
         const scbPrice = parseFloat($("#scbPrice").val());
         const scbDividend = parseFloat($("#scbDividend").val());
         const scbTax = parseFloat($("#scbTax").val()) / 100;
-        let scbShares = parseFloat($("#scbShares").val());
 
-        if (!scbShares) {
-            scbShares = investment / scbPrice;
-            $("#scbShares").val(scbShares.toFixed(2));
-        }
+        const scbInvestment = shareCount * scbPrice;
+        const scbMonthly = shareCount * scbDividend * (1 - scbTax);
         
-        const scbMonthly = scbShares * scbDividend * (1 - scbTax);
+        $("#scbInvestment").text(scbInvestment.toFixed(2));
         $("#scbMonthly").text(scbMonthly.toFixed(2));
 
         // O Calculations
         const oPrice = parseFloat($("#oPrice").val());
         const oDividend = parseFloat($("#oDividend").val());
         const oTax = parseFloat($("#oTax").val()) / 100;
-        let oShares = parseFloat($("#oShares").val());
 
-        if (!oShares) {
-            oShares = (investment / exchangeRate) / oPrice;
-            $("#oShares").val(oShares.toFixed(2));
-        }
-
-        const oMonthly = oShares * oDividend * (1 - oTax) * exchangeRate;
+        const oInvestment = shareCount * oPrice * exchangeRate;
+        const oMonthly = shareCount * oDividend * (1 - oTax) * exchangeRate;
+        
+        $("#oInvestment").text(oInvestment.toFixed(2));
         $("#oMonthly").text(oMonthly.toFixed(2));
 
         // JEPQ Calculations
         const jepqPrice = parseFloat($("#jepqPrice").val());
         const jepqDividend = parseFloat($("#jepqDividend").val());
         const jepqTax = parseFloat($("#jepqTax").val()) / 100;
-        let jepqShares = parseFloat($("#jepqShares").val());
 
-        if (!jepqShares) {
-            jepqShares = (investment / exchangeRate) / jepqPrice;
-            $("#jepqShares").val(jepqShares.toFixed(2));
-        }
-
-        const jepqMonthly = jepqShares * jepqDividend * (1 - jepqTax) * exchangeRate;
+        const jepqInvestment = shareCount * jepqPrice * exchangeRate;
+        const jepqMonthly = shareCount * jepqDividend * (1 - jepqTax) * exchangeRate;
+        
+        $("#jepqInvestment").text(jepqInvestment.toFixed(2));
         $("#jepqMonthly").text(jepqMonthly.toFixed(2));
 
         updateChart([scbMonthly, oMonthly, jepqMonthly]);
@@ -166,7 +144,7 @@
                 data: {
                     labels: ['SCB', 'O', 'JEPQ'],
                     datasets: [{
-                        label: 'Monthly Dividend (THB)',
+                        label: 'รายได้ต่อเดือน (บาท)',
                         data: data,
                         backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc']
                     }]
@@ -184,13 +162,12 @@
         }
     }
 
-    // Automatically calculate on input change
-    $("input").on("input", calculateDividends);
+    // คำนวณอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูล
+    $("#shareCount, #exchangeRate").on("input", calculateDividends);
 
-    // Initial calculation
+    // คำนวณครั้งแรกเมื่อโหลดหน้าเว็บ
     calculateDividends();
 });
-
 
 </script>
 </body>
