@@ -11,13 +11,16 @@
 <body>
 <div class="container my-5">
     <h2 class="text-center">Dividend Calculator</h2>
+    
+    <!-- Investment and Exchange Rate Section -->
     <div class="row">
-        <!-- Investment Input -->
         <div class="col-md-6">
             <div class="form-group">
-                <label for="investment">Investment (in THB)</label>
-                <input type="number" id="investment" class="form-control" value="1000000" step="0.01">
+                <label for="investment">Total Investment (THB)</label>
+                <input type="number" id="investment" class="form-control" value="1000000">
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="exchangeRate">Exchange Rate (THB/USD)</label>
                 <input type="number" id="exchangeRate" class="form-control" value="33.97" step="0.01">
@@ -25,25 +28,26 @@
         </div>
     </div>
 
+    <!-- Stock Sections -->
     <div class="row">
         <!-- SCB Section -->
         <div class="col-md-4">
             <h4>SCB</h4>
             <div class="form-group">
                 <label>Current Price (THB)</label>
-                <input type="number" id="scbPrice" class="form-control" value="112.5" step="0.01">
+                <input type="number" id="scbPrice" class="form-control" value="112.5">
             </div>
             <div class="form-group">
-                <label>Number of Shares</label>
-                <input type="number" id="scbShares" class="form-control" placeholder="Calculate based on investment">
+                <label>Shares Required</label>
+                <input type="number" id="scbShares" class="form-control" placeholder="Calculated based on investment">
             </div>
             <div class="form-group">
                 <label>Monthly Dividend per Share (THB)</label>
-                <input type="number" id="scbDividend" class="form-control" value="0.667" step="0.01">
+                <input type="number" id="scbDividend" class="form-control" value="0.667">
             </div>
             <div class="form-group">
                 <label>Tax (%)</label>
-                <input type="number" id="scbTax" class="form-control" value="10" step="0.1">
+                <input type="number" id="scbTax" class="form-control" value="10">
             </div>
             <h5>Monthly Dividend: <span id="scbMonthly">0</span> THB</h5>
         </div>
@@ -53,19 +57,19 @@
             <h4>O</h4>
             <div class="form-group">
                 <label>Current Price (USD)</label>
-                <input type="number" id="oPrice" class="form-control" value="58.88" step="0.01">
+                <input type="number" id="oPrice" class="form-control" value="58.88">
             </div>
             <div class="form-group">
-                <label>Number of Shares</label>
-                <input type="number" id="oShares" class="form-control" placeholder="Calculate based on investment">
+                <label>Shares Required</label>
+                <input type="number" id="oShares" class="form-control" placeholder="Calculated based on investment">
             </div>
             <div class="form-group">
                 <label>Monthly Dividend per Share (USD)</label>
-                <input type="number" id="oDividend" class="form-control" value="0.264" step="0.01">
+                <input type="number" id="oDividend" class="form-control" value="0.264">
             </div>
             <div class="form-group">
                 <label>Tax (%)</label>
-                <input type="number" id="oTax" class="form-control" value="15" step="0.1">
+                <input type="number" id="oTax" class="form-control" value="15">
             </div>
             <h5>Monthly Dividend: <span id="oMonthly">0</span> THB</h5>
         </div>
@@ -75,32 +79,33 @@
             <h4>JEPQ</h4>
             <div class="form-group">
                 <label>Current Price (USD)</label>
-                <input type="number" id="jepqPrice" class="form-control" value="54.44" step="0.01">
+                <input type="number" id="jepqPrice" class="form-control" value="54.44">
             </div>
             <div class="form-group">
-                <label>Number of Shares</label>
-                <input type="number" id="jepqShares" class="form-control" placeholder="Calculate based on investment">
+                <label>Shares Required</label>
+                <input type="number" id="jepqShares" class="form-control" placeholder="Calculated based on investment">
             </div>
             <div class="form-group">
                 <label>Monthly Dividend per Share (USD)</label>
-                <input type="number" id="jepqDividend" class="form-control" value="0.380" step="0.01">
+                <input type="number" id="jepqDividend" class="form-control" value="0.380">
             </div>
             <div class="form-group">
                 <label>Tax (%)</label>
-                <input type="number" id="jepqTax" class="form-control" value="15" step="0.1">
+                <input type="number" id="jepqTax" class="form-control" value="15">
             </div>
             <h5>Monthly Dividend: <span id="jepqMonthly">0</span> THB</h5>
         </div>
     </div>
 
-    <!-- Chart Section -->
+    <!-- Dividend Summary Chart -->
     <div class="my-5">
         <canvas id="dividendChart"></canvas>
     </div>
 </div>
 
-<script  >
-  $(document).ready(function() {
+<script  > 
+
+    $(document).ready(function() {
     function calculateDividends() {
         const investment = parseFloat($("#investment").val());
         const exchangeRate = parseFloat($("#exchangeRate").val());
@@ -114,8 +119,6 @@
         if (!scbShares) {
             scbShares = investment / scbPrice;
             $("#scbShares").val(scbShares.toFixed(2));
-        } else {
-            $("#investment").val((scbShares * scbPrice).toFixed(2));
         }
         
         const scbMonthly = scbShares * scbDividend * (1 - scbTax);
@@ -130,8 +133,6 @@
         if (!oShares) {
             oShares = (investment / exchangeRate) / oPrice;
             $("#oShares").val(oShares.toFixed(2));
-        } else {
-            $("#investment").val((oShares * oPrice * exchangeRate).toFixed(2));
         }
 
         const oMonthly = oShares * oDividend * (1 - oTax) * exchangeRate;
@@ -146,8 +147,6 @@
         if (!jepqShares) {
             jepqShares = (investment / exchangeRate) / jepqPrice;
             $("#jepqShares").val(jepqShares.toFixed(2));
-        } else {
-            $("#investment").val((jepqShares * jepqPrice * exchangeRate).toFixed(2));
         }
 
         const jepqMonthly = jepqShares * jepqDividend * (1 - jepqTax) * exchangeRate;
@@ -185,9 +184,14 @@
         }
     }
 
-    // Trigger calculation on input change
+    // Automatically calculate on input change
+    $("input").on("input", calculateDividends);
 
-  
+    // Initial calculation
+    calculateDividends();
+});
+
+
 </script>
 </body>
 </html>
