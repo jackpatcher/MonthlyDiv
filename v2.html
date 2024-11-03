@@ -116,8 +116,8 @@
         const oInvestment =  shareCount * oPrice * exchangeRate ;
         const oMonthly =  shareCount * oDividend * (1 - oTax) * exchangeRate ;
         
-        $("#oInvestment").text(oInvestment.toFixed(2));
-        $("#oMonthly").text(oMonthly.toFixed(2));
+        $("#oInvestment").text(numberWithCommas(oInvestment.toFixed(2))(;
+        $("#oMonthly").text(numberWithCommas(oMonthly.toFixed(2)));
 
         // JEPQ Calculations
         const jepqPrice = parseFloat($("#jepqPrice").val());
