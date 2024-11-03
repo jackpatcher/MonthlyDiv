@@ -102,8 +102,8 @@
         const scbDividend = parseFloat($("#scbDividend").val());
         const scbTax = parseFloat($("#scbTax").val()) / 100;
 
-        const scbInvestment = shareCount * scbPrice;
-        const scbMonthly = shareCount * scbDividend * (1 - scbTax);
+        const scbInvestment = numberWithCommas(shareCount * scbPrice);
+        const scbMonthly = numberWithCommas(shareCount * scbDividend * (1 - scbTax));
         
         $("#scbInvestment").text(scbInvestment.toFixed(2));
         $("#scbMonthly").text(scbMonthly.toFixed(2));
@@ -113,8 +113,8 @@
         const oDividend = parseFloat($("#oDividend").val());
         const oTax = parseFloat($("#oTax").val()) / 100;
 
-        const oInvestment = shareCount * oPrice * exchangeRate;
-        const oMonthly = shareCount * oDividend * (1 - oTax) * exchangeRate;
+        const oInvestment = numberWithCommas(shareCount * oPrice * exchangeRate);
+        const oMonthly = numberWithCommas(shareCount * oDividend * (1 - oTax) * exchangeRate);
         
         $("#oInvestment").text(oInvestment.toFixed(2));
         $("#oMonthly").text(oMonthly.toFixed(2));
@@ -124,8 +124,8 @@
         const jepqDividend = parseFloat($("#jepqDividend").val());
         const jepqTax = parseFloat($("#jepqTax").val()) / 100;
 
-        const jepqInvestment = shareCount * jepqPrice * exchangeRate;
-        const jepqMonthly = shareCount * jepqDividend * (1 - jepqTax) * exchangeRate;
+        const jepqInvestment = numberWithCommas(shareCount * jepqPrice * exchangeRate);
+        const jepqMonthly = numberWithCommas(shareCount * jepqDividend * (1 - jepqTax) * exchangeRate);
         
         $("#jepqInvestment").text(jepqInvestment.toFixed(2));
         $("#jepqMonthly").text(jepqMonthly.toFixed(2));
@@ -162,8 +162,14 @@
         }
     }
 
+    function numberWithCommas(x) {
+     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     // คำนวณอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูล
     $("#shareCount, #exchangeRate").on("input", calculateDividends);
+
+    
 
     // คำนวณครั้งแรกเมื่อโหลดหน้าเว็บ
     calculateDividends();
