@@ -99,7 +99,7 @@
             const scbTax = parseFloat($("#scbTax").val()) / 100;
             const scbShares = investment / scbPrice;
             const scbMonthly = scbShares * scbDividend * (1 - scbTax);
-            $("#scbMonthly").text(scbMonthly.toFixed(2));
+            $("#scbMonthly").text(numberWithCommas(scbMonthly.toFixed(2)));
 
             // O Calculations
             const oPrice = parseFloat($("#oPrice").val());
@@ -107,7 +107,7 @@
             const oTax = parseFloat($("#oTax").val()) / 100;
             const oShares = (investment / exchangeRate) / oPrice;
             const oMonthly = oShares * oDividend * (1 - oTax) * exchangeRate;
-            $("#oMonthly").text(oMonthly.toFixed(2));
+            $("#oMonthly").text(numberWithCommas(oMonthly.toFixed(2)));
 
             // JEPQ Calculations
             const jepqPrice = parseFloat($("#jepqPrice").val());
@@ -115,7 +115,7 @@
             const jepqTax = parseFloat($("#jepqTax").val()) / 100;
             const jepqShares = (investment / exchangeRate) / jepqPrice;
             const jepqMonthly = jepqShares * jepqDividend * (1 - jepqTax) * exchangeRate;
-            $("#jepqMonthly").text(jepqMonthly.toFixed(2));
+            $("#jepqMonthly").text(numberWithCommas(jepqMonthly.toFixed(2)));
 
             updateChart([scbMonthly, oMonthly, jepqMonthly]);
         }
@@ -148,6 +148,10 @@
                 });
             }
         }
+
+       function numberWithCommas(x) {
+       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
         // Trigger calculation on input change
         $("input").on("input", calculateDividends);
