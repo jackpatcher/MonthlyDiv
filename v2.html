@@ -103,7 +103,7 @@
         const scbTax = parseFloat($("#scbTax").val()) / 100;
 
         const scbInvestment =  shareCount * scbPrice ;
-        const scbMonthly =  shareCount * scbDividend * (1 - scbTax));
+        const scbMonthly =  shareCount * scbDividend * (1 - scbTax);
         
         $("#scbInvestment").text(numberWithCommas(scbInvestment.toFixed(2)));
         $("#scbMonthly").text(numberWithCommas(scbMonthly.toFixed(2)));
